@@ -58,3 +58,6 @@ target/
 
 #local config
 *.cfg
+
+#example file for copy/pasting
+template.py
