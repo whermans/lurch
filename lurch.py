@@ -2,11 +2,16 @@
 from modules.bot import Bot
 from modules.base.connection import Connection
 from modules.config import Config
+from modules.plugins.wtf import WtfPlugin
 
 def main():
-    cfg = Config("lurch")
+    cfg_name = "lurch"
+    cfg = Config(cfg_name)
     c = Connection(cfg.server)
-    b = Bot(c, cfg.nick, cfg.channel, cfg.real, cfg.password)
+    p = WtfPlugin(c, cfg)
+    plugins = []
+    plugins.append(p)
+    b = Bot(c, cfg.nick, cfg.channel, cfg.real, cfg.password, plugins)
     try:
         b.run()
     except KeyboardInterrupt:
