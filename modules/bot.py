@@ -1,19 +1,20 @@
 from modules.base.connection import Connection
 from time import sleep
+import threading
 
 class Bot:
 
     nick = channel = real = password =""
     conn= None
-    plugins = None
+    plugins = []
+    timed = []
 
-    def __init__(self, connection, nick, channel, real, password, plugins = []):
+    def __init__(self, connection, nick, channel, real, password):
         self.conn = connection
         self.nick = nick
         self.channel = channel
         self.real = real
         self.password = password
-        self.plugins = plugins
         self.register()
 
     def register(self):
@@ -29,11 +30,18 @@ class Bot:
                 break
         self.conn.send("JOIN {0}".format(self.channel))
 
+    def install(self, plugin):
+        self.plugins.append(plugin)
+        if plugin.timed:
+            self.timed.append(plugin)
+
     def run(self):
-        while 1:
-            recv = self.conn.receive()
-            if recv != "":
-                self.parse(recv)
+        threading.Timer(0.5, self.run).start()
+        for t in self.timed:
+            t.tick()
+        recv = self.conn.receive()
+        if recv != "":
+            self.parse(recv)
 
     def parse(self, recv):
         if "PING" in recv:

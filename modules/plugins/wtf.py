@@ -1,4 +1,5 @@
 from modules.base.plugin import Plugin
+from urllib.request import urlopen
 
 class WtfPlugin(Plugin):
 
@@ -11,7 +12,18 @@ class WtfPlugin(Plugin):
 
     def wtf(self, query):
         resp = ("I don't know what {0} means".format(query))
-        self.conn.send("PRIVMSG {0} :{1}".format(self.cfg.channel, resp))
+        answer = self.lookup(query)
+        if answer != "":
+            resp = answer
+        self.message(resp)
+
+    def lookup(self, query):
+        answer = url = ""
+        try:
+            reply = self.request(url)
+        except ValueError:
+            pass
+        return answer
 
     def request(self, url):
-        resp = urllib.request.urlopen(url).read()
+        resp = urlopen(url).read()
