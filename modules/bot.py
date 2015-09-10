@@ -23,9 +23,9 @@ class Bot:
         self.conn.send("NICK {}".format(self.nick))
         while 1:
             recv = self.conn.receive()
-            if recv.find("PING") != -1:
+            if "PING" in recv:
                 self.conn.ping(recv)
-            if recv.find("372") != -1:
+            if "372" in recv:
                 break
         self.conn.send("JOIN {0}".format(self.channel))
 
@@ -36,7 +36,7 @@ class Bot:
                 self.parse(recv)
 
     def parse(self, recv):
-        if recv.find("PING") != -1:
+        if "PING" in recv:
             self.conn.ping(recv)
         for p in self.plugins:
             p.parse(recv)

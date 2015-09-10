@@ -6,7 +6,7 @@ class WtfPlugin(Plugin):
         super(WtfPlugin, self).__init__(conn, cfg)
 
     def parse(self, message):
-        if message.find("!wtf") != -1:
+        if "!wtf" in message:
             self.wtf(message.split("!wtf ")[1])
 
     def wtf(self, query):
