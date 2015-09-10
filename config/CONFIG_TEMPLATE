@@ -1,0 +1,7 @@
+[params]
+
+server = "irc.foo.bar"
+port = 6667
+nick = "my nick"
+real = "my real name"
+channel = "#channel"
