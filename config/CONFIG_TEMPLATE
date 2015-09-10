@@ -5,3 +5,5 @@ port = 6667
 nick = "my nick"
 real = "my real name"
 channel = "#channel"
+
+api_key_1 = "optional API key for plugins"
