@@ -28,7 +28,9 @@ class Bot:
                 self.conn.ping(recv)
             if "372" in recv:
                 break
-        self.conn.send("JOIN {0}".format(self.channel))
+            if "422" in recv:
+                break
+        self.conn.send("JOIN #{0}".format(self.channel))
 
     def install(self, plugin):
         self.plugins.append(plugin)
